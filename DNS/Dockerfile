@@ -8,6 +8,9 @@ RUN apt-get upgrade -y
 
 COPY ./etc/* /etc/bind
 
+RUN mkdir -m 0775 -p /run/named
+RUN chown bind:bind /run/named
+
 EXPOSE 53/tcp 
 EXPOSE 53/udp 
 EXPOSE 953/tcp 

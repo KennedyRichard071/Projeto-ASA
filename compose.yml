@@ -2,7 +2,7 @@ services:
   intranet:
     build:
       context: ./intranet
-      dockerfile: Dockerfile
+      dockerfile: intranet/Dockerfile
     image: intranet
     container_name: intranet
     networks:
@@ -10,7 +10,7 @@ services:
   portal:
     build:
       context: ./portal
-      dockerfile: Dockerfile
+      dockerfile: portal/Dockerfile
     image: portal
     container_name: portal
     networks:
@@ -18,7 +18,7 @@ services:
   webmail:
     build:
       context: ./webmail
-      dockerfile: Dockerfile
+      dockerfile: webmail/Dockerfile
     image: webmail
     container_name: webmail
     networks:
@@ -26,7 +26,7 @@ services:
   proxy:
     build:
       context: ./proxy
-      dockerfile: Dockerfile
+      dockerfile: proxy/Dockerfile
     image: proxy
     container_name: proxy
     ports:
@@ -51,6 +51,32 @@ services:
       - "53:53/udp"
     networks:
       - asa-network
+  email:
+    build: ./email
+    image: email
+    container_name: email
+    ports:
+      - "25:25/tcp"
+      - "100:100/tcp"
+      - "143:143/tcp"
+      - "587:587/tcp"
+      - "993:993/tcp"
+      - "995:995/tcp"
+    networks:
+      - asa-network
+  webmail1:
+      build:
+        context: ./webmail1
+      image: webmail1
+      container_name: webmail1
+      restart: always
+      tty: true
+      volumes:
+        - ./webmail1/rainloop:/var/www/html/rainloop
+      depends_on:
+        - email
+      networks:
+        - asa-network
 #Docker Networks
 networks:
   asa-network:
