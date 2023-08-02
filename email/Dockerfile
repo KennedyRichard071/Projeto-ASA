@@ -1,5 +1,7 @@
 FROM ubuntu:latest
 
+WORKDIR /app
+
 RUN apt-get update -y
 
 RUN apt-get install postfix dovecot-imapd dovecot-pop3d dovecot-core nano telnet -y
@@ -23,6 +25,8 @@ EXPOSE 143/tcp
 EXPOSE 993/tcp
 EXPOSE 995/tcp
 
-CMD ["/etc/init.d/start_email.sh"]
+CMD tail -F /dev/null
+
+#CMD ["/etc/init.d/start_email.sh"]
 
 #CMD ["/usr/sbin/postfix","start-fg"]
