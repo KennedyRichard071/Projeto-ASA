@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "Senha para usuário kennedy"
-adduser -q --gecos " " kennedy
+useradd -c 'kennedy' -m -s /bin/false kennedy
+echo "kennedy:123456"|chpasswd
 
-echo "Senha para usuário richard"
-adduser -q --gecos " " richard
+useradd -c 'richard' -m -s /bin/false richard
+echo "richard:123456"|chpasswd
